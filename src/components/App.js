@@ -1,9 +1,8 @@
-// App.js
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import "../styles/App.css"
+import "../styles/App.css";
 
 const Modal = ({ children, open, onClose }) => {
   if (!open) return null;
@@ -22,7 +21,13 @@ export default function App() {
   const [events, setEvents] = useState(() => {
     try {
       const raw = localStorage.getItem('events_v1');
-      return raw ? JSON.parse(raw).map(e => ({ ...e, start: new Date(e.start), end: new Date(e.end) })) : [];
+      return raw
+        ? JSON.parse(raw).map(e => ({
+            ...e,
+            start: new Date(e.start),
+            end: new Date(e.end),
+          }))
+        : [];
     } catch (e) {
       return [];
     }
@@ -34,13 +39,17 @@ export default function App() {
   const [editingEvent, setEditingEvent] = useState(null);
   const [filter, setFilter] = useState('all');
 
+  const [titleInput, setTitleInput] = useState('');
+  const [locationInput, setLocationInput] = useState('');
+  const [editTitleInput, setEditTitleInput] = useState('');
+  const [editLocationInput, setEditLocationInput] = useState('');
+
   useEffect(() => {
     localStorage.setItem('events_v1', JSON.stringify(events));
   }, [events]);
 
   function handleSelectSlot({ start }) {
     setSelectedDate(start);
-    setShowCreateModal(true);
   }
 
   function openCreatePopup() {
@@ -67,7 +76,9 @@ export default function App() {
   }
 
   function saveEditedEvent(changes) {
-    setEvents(prev => prev.map(e => e.id === editingEvent.id ? { ...e, ...changes } : e));
+    setEvents(prev =>
+      prev.map(e => (e.id === editingEvent.id ? { ...e, ...changes } : e))
+    );
     setShowEditModal(false);
     setEditingEvent(null);
   }
@@ -80,8 +91,16 @@ export default function App() {
 
   function eventStyleGetter(event) {
     const start = new Date(event.start);
-    const bg = start < new Date() ? 'rgb(222, 105, 135)' : 'rgb(140, 189, 76)';
-    return { style: { backgroundColor: bg, border: 'none', color: 'white', padding: '2px 4px' } };
+    const bg =
+      start < new Date() ? 'rgb(222, 105, 135)' : 'rgb(140, 189, 76)';
+    return {
+      style: {
+        backgroundColor: bg,
+        border: 'none',
+        color: 'white',
+        padding: '2px 4px',
+      },
+    };
   }
 
   const displayedEvents = events.filter(e => {
@@ -89,11 +108,6 @@ export default function App() {
     const isPast = new Date(e.start) < new Date();
     return filter === 'past' ? isPast : !isPast;
   });
-
-  const [titleInput, setTitleInput] = useState('');
-  const [locationInput, setLocationInput] = useState('');
-  const [editTitleInput, setEditTitleInput] = useState('');
-  const [editLocationInput, setEditLocationInput] = useState('');
 
   useEffect(() => {
     if (showCreateModal) {
@@ -114,9 +128,15 @@ export default function App() {
       <h2>Event Tracker</h2>
 
       <div className="filter-buttons">
-        <button className="btn" onClick={() => setFilter('all')}>All</button>
-        <button className="btn" onClick={() => setFilter('past')}>Past</button>
-        <button className="btn" onClick={() => setFilter('upcoming')}>Upcoming</button>
+        <button className="btn" onClick={() => setFilter('all')}>
+          All
+        </button>
+        <button className="btn" onClick={() => setFilter('past')}>
+          Past
+        </button>
+        <button className="btn" onClick={() => setFilter('upcoming')}>
+          Upcoming
+        </button>
       </div>
 
       <div className="calendar-container">
@@ -132,38 +152,74 @@ export default function App() {
           views={{ month: true }}
         />
       </div>
-
       {selectedDate && (
         <div className="action-buttons">
-           <button className="btn" onClick={openCreatePopup}>Add Event</button>
-           </div>
+          <button className="btn" onClick={openCreatePopup}>
+            Add Event
+          </button>
+        </div>
       )}
-          
-
       <Modal open={showCreateModal} onClose={() => setShowCreateModal(false)}>
         <div className="modal-content">
           <h3>Create Event</h3>
-          <input placeholder="Event Title" value={titleInput} onChange={e => setTitleInput(e.target.value)} />
-          <input placeholder="Event Location" value={locationInput} onChange={e => setLocationInput(e.target.value)} />
+          <input
+            placeholder="Event Title"
+            value={titleInput}
+            onChange={e => setTitleInput(e.target.value)}
+          />
+          <input
+            placeholder="Event Location"
+            value={locationInput}
+            onChange={e => setLocationInput(e.target.value)}
+          />
 
           <div className="mm-popup__box__footer">
             <div className="mm-popup__box__footer__right-space">
-              <button className="mm-popup__btn" onClick={() => saveNewEvent({ title: titleInput, location: locationInput })}>Save</button>
+              <button
+                className="mm-popup__btn"
+                onClick={() =>
+                  saveNewEvent({ title: titleInput, location: locationInput })
+                }
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
       </Modal>
-
       <Modal open={showEditModal} onClose={() => setShowEditModal(false)}>
         <div className="modal-content">
           <h3>Edit Event</h3>
-          <input placeholder="Event Title" value={editTitleInput} onChange={e => setEditTitleInput(e.target.value)} />
-          <input placeholder="Event Location" value={editLocationInput} onChange={e => setEditLocationInput(e.target.value)} />
+          <input
+            placeholder="Event Title"
+            value={editTitleInput}
+            onChange={e => setEditTitleInput(e.target.value)}
+          />
+          <input
+            placeholder="Event Location"
+            value={editLocationInput}
+            onChange={e => setEditLocationInput(e.target.value)}
+          />
 
           <div className="mm-popup__box__footer edit-footer">
-            <button className="mm-popup__btn--danger" onClick={() => deleteEvent(editingEvent?.id)}>Delete</button>
+            <button
+              className="mm-popup__btn--danger"
+              onClick={() => deleteEvent(editingEvent?.id)}
+            >
+              Delete
+            </button>
             <div className="mm-popup__box__footer__right-space">
-              <button className="mm-popup__btn--info" onClick={() => saveEditedEvent({ title: editTitleInput, location: editLocationInput })}>Save</button>
+              <button
+                className="mm-popup__btn--info"
+                onClick={() =>
+                  saveEditedEvent({
+                    title: editTitleInput,
+                    location: editLocationInput,
+                  })
+                }
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>
@@ -171,4 +227,3 @@ export default function App() {
     </div>
   );
 }
-
