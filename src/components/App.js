@@ -133,10 +133,11 @@ export default function App() {
       </div>
 
       {selectedDate && (
-        <div className="floating-btn">
-          <button className="btn" onClick={openCreatePopup}>Add Event</button>
-        </div>
+        <div className="action-buttons">
+           <button className="btn" onClick={openCreatePopup}>Add Event</button>
+           </div>
       )}
+          
 
       <Modal open={showCreateModal} onClose={() => setShowCreateModal(false)}>
         <div className="modal-content">
