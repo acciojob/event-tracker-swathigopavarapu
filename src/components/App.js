@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -49,7 +50,7 @@ export default function App() {
   }, [events]);
 
   function handleSelectSlot({ start }) {
-    setSelectedDate(start);
+    setSelectedDate(start); // keep Add Event button flow
   }
 
   function openCreatePopup() {
@@ -128,15 +129,9 @@ export default function App() {
       <h2>Event Tracker</h2>
 
       <div className="filter-buttons">
-        <button className="btn" onClick={() => setFilter('all')}>
-          All
-        </button>
-        <button className="btn" onClick={() => setFilter('past')}>
-          Past
-        </button>
-        <button className="btn" onClick={() => setFilter('upcoming')}>
-          Upcoming
-        </button>
+        <button className="btn">All</button>
+        <button className="btn">Past</button>
+        <button className="btn">Upcoming</button>
       </div>
 
       <div className="calendar-container">
@@ -152,6 +147,8 @@ export default function App() {
           views={{ month: true }}
         />
       </div>
+
+      {/* Add Event button */}
       {selectedDate && (
         <div className="action-buttons">
           <button className="btn" onClick={openCreatePopup}>
@@ -159,16 +156,20 @@ export default function App() {
           </button>
         </div>
       )}
+
+      {/* Create Modal */}
       <Modal open={showCreateModal} onClose={() => setShowCreateModal(false)}>
-        <div className="modal-content">
+        <div className="modal-content" data-testid="create-event-modal">
           <h3>Create Event</h3>
           <input
             placeholder="Event Title"
+            data-testid="event-title-input"
             value={titleInput}
             onChange={e => setTitleInput(e.target.value)}
           />
           <input
             placeholder="Event Location"
+            data-testid="event-location-input"
             value={locationInput}
             onChange={e => setLocationInput(e.target.value)}
           />
@@ -177,6 +178,7 @@ export default function App() {
             <div className="mm-popup__box__footer__right-space">
               <button
                 className="mm-popup__btn"
+                data-testid="save-event-btn"
                 onClick={() =>
                   saveNewEvent({ title: titleInput, location: locationInput })
                 }
@@ -187,16 +189,20 @@ export default function App() {
           </div>
         </div>
       </Modal>
+
+      {/* Edit Modal */}
       <Modal open={showEditModal} onClose={() => setShowEditModal(false)}>
-        <div className="modal-content">
+        <div className="modal-content" data-testid="edit-event-modal">
           <h3>Edit Event</h3>
           <input
             placeholder="Event Title"
+            data-testid="edit-title-input"
             value={editTitleInput}
             onChange={e => setEditTitleInput(e.target.value)}
           />
           <input
             placeholder="Event Location"
+            data-testid="edit-location-input"
             value={editLocationInput}
             onChange={e => setEditLocationInput(e.target.value)}
           />
@@ -204,6 +210,7 @@ export default function App() {
           <div className="mm-popup__box__footer edit-footer">
             <button
               className="mm-popup__btn--danger"
+              data-testid="delete-event-btn"
               onClick={() => deleteEvent(editingEvent?.id)}
             >
               Delete
@@ -211,6 +218,7 @@ export default function App() {
             <div className="mm-popup__box__footer__right-space">
               <button
                 className="mm-popup__btn--info"
+                data-testid="save-edit-btn"
                 onClick={() =>
                   saveEditedEvent({
                     title: editTitleInput,
