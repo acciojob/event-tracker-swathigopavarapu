@@ -40,6 +40,7 @@ export default function App() {
 
   function handleSelectSlot({ start }) {
     setSelectedDate(start);
+    setShowCreateModal(true);
   }
 
   function openCreatePopup() {
