@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import "../styles/App.css"
+import "../styles/App.css";
 
 const localizer = momentLocalizer(moment);
 
@@ -63,9 +63,15 @@ const App = () => {
     <div style={{ margin: "20px" }}>
       {/* Filter Buttons */}
       <div style={{ marginBottom: "10px" }}>
-        <button className="btn" onClick={() => setFilter("All")}>All</button>
-        <button className="btn" onClick={() => setFilter("Past")}>Past</button>
-        <button className="btn" onClick={() => setFilter("Upcoming")}>Upcoming</button>
+        <button className="btn" onClick={() => setFilter("All")}>
+          All
+        </button>
+        <button className="btn" onClick={() => setFilter("Past")}>
+          Past
+        </button>
+        <button className="btn" onClick={() => setFilter("Upcoming")}>
+          Upcoming
+        </button>
       </div>
 
       {/* Calendar */}
@@ -85,12 +91,27 @@ const App = () => {
 
       {/* Create Event Modal */}
       {createEventOpen && (
-        <div style={{
-          position: "fixed", top: 0, left: 0, width: "100%",
-          height: "100%", background: "rgba(0,0,0,0.5)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <div style={{ background: "white", padding: 20, borderRadius: 8, width: 300 }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              padding: 20,
+              borderRadius: 8,
+              width: 300,
+            }}
+          >
             <h3>Create Event</h3>
             <input
               placeholder="Event Title"
@@ -106,7 +127,7 @@ const App = () => {
             />
             <div className="mm-popup__box__footer__right-space">
               <button
-                className="mm-popup__btn"
+                className="mm-popup__btn mm-popup__btn--save"
                 onClick={() => {
                   if (!newTitle) return alert("Event Title required");
                   setEvents([
@@ -126,7 +147,7 @@ const App = () => {
                 Save
               </button>
               <button
-                className="mm-popup__btn"
+                className="mm-popup__btn mm-popup__btn--cancel"
                 onClick={() => setCreateEventOpen(false)}
               >
                 Cancel
@@ -138,12 +159,27 @@ const App = () => {
 
       {/* Edit/Delete Modal */}
       {modalOpen && (
-        <div style={{
-          position: "fixed", top: 0, left: 0, width: "100%",
-          height: "100%", background: "rgba(0,0,0,0.5)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <div style={{ background: "white", padding: 20, borderRadius: 8, width: 300 }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              padding: 20,
+              borderRadius: 8,
+              width: 300,
+            }}
+          >
             <h3>Edit Event</h3>
             <input
               placeholder="Event Title"
@@ -153,7 +189,7 @@ const App = () => {
             />
             <div className="mm-popup__box__footer__right-space">
               <button
-                className="mm-popup__btn mm-popup__btn--info"
+                className="mm-popup__btn mm-popup__btn--info mm-popup__btn--save"
                 onClick={saveEvent}
               >
                 Save
