@@ -89,121 +89,81 @@ const App = () => {
         })}
       />
 
-      {/* Create Event Modal */}
-      {createEventOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+{/* Create Event Modal */}
+{createEventOpen && (
+  <div className="modal-overlay">
+    <div className="modal-box">
+      <h3>Create Event</h3>
+      <input
+        placeholder="Event Title"
+        value={newTitle}
+        onChange={(e) => setNewTitle(e.target.value)}
+      />
+      <input
+        placeholder="Event Location"
+        value={newLocation}
+        onChange={(e) => setNewLocation(e.target.value)}
+      />
+      <div className="mm-popup__box__footer__right-space">
+        <button
+          className="mm-popup__btn mm-popup__btn--save-create"
+          onClick={() => {
+            if (!newTitle) return alert("Event Title required");
+            setEvents([
+              ...events,
+              {
+                id: new Date().getTime(),
+                title: newTitle,
+                location: newLocation,
+                start: newEventDate,
+                end: newEventDate,
+                isPast: newEventDate < new Date(),
+              },
+            ]);
+            setCreateEventOpen(false);
           }}
         >
-          <div
-            style={{
-              background: "white",
-              padding: 20,
-              borderRadius: 8,
-              width: 300,
-            }}
-          >
-            <h3>Create Event</h3>
-            <input
-              placeholder="Event Title"
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
-              style={{ width: "100%", marginBottom: 10, padding: 5 }}
-            />
-            <input
-              placeholder="Event Location"
-              value={newLocation}
-              onChange={(e) => setNewLocation(e.target.value)}
-              style={{ width: "100%", marginBottom: 10, padding: 5 }}
-            />
-            <div className="mm-popup__box__footer__right-space">
-              <button
-                className="mm-popup__btn mm-popup__btn--save"
-                onClick={() => {
-                  if (!newTitle) return alert("Event Title required");
-                  setEvents([
-                    ...events,
-                    {
-                      id: new Date().getTime(),
-                      title: newTitle,
-                      location: newLocation,
-                      start: newEventDate,
-                      end: newEventDate,
-                      isPast: newEventDate < new Date(),
-                    },
-                  ]);
-                  setCreateEventOpen(false);
-                }}
-              >
-                Save
-              </button>
-              <button
-                className="mm-popup__btn mm-popup__btn--cancel"
-                onClick={() => setCreateEventOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          Save
+        </button>
+        <button
+          className="mm-popup__btn mm-popup__btn--cancel-create"
+          onClick={() => setCreateEventOpen(false)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
-      {/* Edit/Delete Modal */}
-      {modalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+{/* Edit/Delete Modal */}
+{modalOpen && (
+  <div className="modal-overlay">
+    <div className="modal-box">
+      <h3>Edit Event</h3>
+      <input
+        placeholder="Event Title"
+        value={titleInput}
+        onChange={(e) => setTitleInput(e.target.value)}
+      />
+      <div className="mm-popup__box__footer__right-space">
+        <button
+          className="mm-popup__btn mm-popup__btn--save-edit"
+          onClick={saveEvent}
         >
-          <div
-            style={{
-              background: "white",
-              padding: 20,
-              borderRadius: 8,
-              width: 300,
-            }}
-          >
-            <h3>Edit Event</h3>
-            <input
-              placeholder="Event Title"
-              value={titleInput}
-              onChange={(e) => setTitleInput(e.target.value)}
-              style={{ width: "100%", marginBottom: 10, padding: 5 }}
-            />
-            <div className="mm-popup__box__footer__right-space">
-              <button
-                className="mm-popup__btn mm-popup__btn--info mm-popup__btn--save"
-                onClick={saveEvent}
-              >
-                Save
-              </button>
-              <button
-                className="mm-popup__btn mm-popup__btn--danger"
-                onClick={deleteEvent}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          Save
+        </button>
+        <button
+          className="mm-popup__btn mm-popup__btn--delete-edit"
+          onClick={deleteEvent}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
