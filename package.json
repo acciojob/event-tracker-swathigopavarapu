@@ -13,12 +13,14 @@
   "license": "ISC",
   "dependencies": {
     "css-loader": "^4.3.0",
+    "cypress": "^9.5.0",
     "jest-junit": "^11.1.0",
+    "moment": "^2.30.1",
     "react": "^16.13.1",
+    "react-big-calendar": "^1.19.4",
     "react-dom": "^16.13.1",
     "style-loader": "^1.2.1",
-    "webpack-cli": "^3.3.12",
-    "cypress": "^9.5.0"
+    "webpack-cli": "^3.3.12"
   },
   "jest": {
     "moduleNameMapper": {
@@ -48,7 +50,7 @@
     "jest": "^26.4.2",
     "react-test-renderer": "^16.13.1",
     "webpack": "^4.44.2",
-    "webpack-dev-server": "^3.11.0",
+    "webpack-dev-server": "^3.11.3",
     "xml-js": "^1.6.11"
   }
 }
