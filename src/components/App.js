@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./App.css"; // Make sure you include CSS below
 
 const localizer = momentLocalizer(moment);
 
@@ -60,12 +61,14 @@ const App = () => {
 
   return (
     <div style={{ margin: "20px" }}>
+      {/* Filter Buttons */}
       <div style={{ marginBottom: "10px" }}>
         <button className="btn" onClick={() => setFilter("All")}>All</button>
         <button className="btn" onClick={() => setFilter("Past")}>Past</button>
         <button className="btn" onClick={() => setFilter("Upcoming")}>Upcoming</button>
       </div>
 
+      {/* Calendar */}
       <Calendar
         localizer={localizer}
         events={filteredEvents}
@@ -101,9 +104,9 @@ const App = () => {
               onChange={(e) => setNewLocation(e.target.value)}
               style={{ width: "100%", marginBottom: 10, padding: 5 }}
             />
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div className="mm-popup__box__footer__right-space">
               <button
-                style={{ marginRight: 5, background: "#4caf50", color: "white", padding: "5px 10px" }}
+                className="mm-popup__btn"
                 onClick={() => {
                   if (!newTitle) return alert("Event Title required");
                   setEvents([
@@ -123,7 +126,7 @@ const App = () => {
                 Save
               </button>
               <button
-                style={{ background: "#f44336", color: "white", padding: "5px 10px" }}
+                className="mm-popup__btn"
                 onClick={() => setCreateEventOpen(false)}
               >
                 Cancel
@@ -148,15 +151,15 @@ const App = () => {
               onChange={(e) => setTitleInput(e.target.value)}
               style={{ width: "100%", marginBottom: 10, padding: 5 }}
             />
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div className="mm-popup__box__footer__right-space">
               <button
-                style={{ marginRight: 5, background: "#4caf50", color: "white", padding: "5px 10px" }}
+                className="mm-popup__btn mm-popup__btn--info"
                 onClick={saveEvent}
               >
                 Save
               </button>
               <button
-                style={{ background: "#f44336", color: "white", padding: "5px 10px" }}
+                className="mm-popup__btn mm-popup__btn--danger"
                 onClick={deleteEvent}
               >
                 Delete

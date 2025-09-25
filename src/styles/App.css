@@ -12,3 +12,28 @@
 .upcoming-event {
   background-color: rgb(140, 189, 76) !important;
 }
+
+/* Cypress-compatible modal buttons */
+.mm-popup__btn {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.mm-popup__btn--info {
+  background-color: #4caf50;
+  color: white;
+}
+
+.mm-popup__btn--danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.mm-popup__box__footer__right-space {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
